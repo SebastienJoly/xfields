@@ -63,7 +63,7 @@ def test_equilibrium_vs_analytical_constraint_coupling(
     # Check the horizontal equilibrium emittance
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_x,
-        result.gemitt_x[0] / (1 - result.Ax[-1] / (tw.damping_constants_s[0] * factor)),
+        result.gemitt_x[0] / (1 - result.Kx[-1] / (tw.damping_constants_s[0] * factor)),
         rtol=1e-2,
     )
     # Check the emittance coupling constraint (also checks vert. eq. emittance)
@@ -71,7 +71,7 @@ def test_equilibrium_vs_analytical_constraint_coupling(
     # Check the longitudinal equilibrium emittance
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_zeta,
-        result.gemitt_zeta[0] / (1 - result.Az[-1] / (tw.damping_constants_s[2])),
+        result.gemitt_zeta[0] / (1 - result.Kz[-1] / (tw.damping_constants_s[2])),
         rtol=1e-2,
     )
 
@@ -103,7 +103,7 @@ def test_equilibrium_vs_analytical_constraint_excitation(
     # Check the horizontal equilibrium emittance
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_x,
-        result.gemitt_x[0] / (1 - result.Ax[-1] / tw.damping_constants_s[0]),
+        result.gemitt_x[0] / (1 - result.Kx[-1] / tw.damping_constants_s[0]),
         rtol=1e-2,
     )
     # Check the emittance coupling constraint (also checks vert. eq. emittance)
@@ -111,7 +111,7 @@ def test_equilibrium_vs_analytical_constraint_excitation(
     # Check the longitudinal equilibrium emittance
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_zeta,
-        result.gemitt_zeta[0] / (1 - result.Az[-1] / (tw.damping_constants_s[2])),
+        result.gemitt_zeta[0] / (1 - result.Kz[-1] / (tw.damping_constants_s[2])),
         rtol=1e-2,
     )
 
@@ -151,19 +151,19 @@ def test_equilibrium_vs_analytical_no_constraint(
     # Check the horizontal equilibrium emittance
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_x,
-        result.gemitt_x[0] / (1 - result.Ax[-1] / tw.damping_constants_s[0]),
+        result.gemitt_x[0] / (1 - result.Kx[-1] / tw.damping_constants_s[0]),
         rtol=1e-2,
     )
     # Check the vertical equilibrium emittance
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_y,
-        result.gemitt_y[0] / (1 - result.Ay[-1] / tw.damping_constants_s[1]),
+        result.gemitt_y[0] / (1 - result.Ky[-1] / tw.damping_constants_s[1]),
         rtol=1e-2,
     )
     # Check the longitudinal equilibrium emittance
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_zeta,
-        result.gemitt_zeta[0] / (1 - result.Az[-1] / (tw.damping_constants_s[2])),
+        result.gemitt_zeta[0] / (1 - result.Kz[-1] / (tw.damping_constants_s[2])),
         rtol=1e-2,
     )
     # -------------------------------------------
