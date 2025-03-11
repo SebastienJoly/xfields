@@ -16,10 +16,8 @@ line = xt.Line.from_json(fname_line_particles)
 # Context, tracker and Twiss table #
 ####################################
 
-context = xo.ContextCpu()
-
 print('Build tracker...')
-line.build_tracker(_context=context)
+line.build_tracker()
 line.matrix_stability_tol = 1e-2
 
 # Calculate Twiss parameters
@@ -33,7 +31,7 @@ twiss = line.twiss(eneloss_and_damping=True)
 # Steady-state emittance calculations, default behavior #
 #########################################################
 
-bunch_intensity = 1e-9 / e  # 1C bunch charge
+bunch_intensity = 6.2e9 # 1C bunch charge
 emittance_coupling_factor = 1 # round beam
 
 result = twiss.compute_equilibrium_emittances_from_sr_and_ibs(
@@ -50,7 +48,7 @@ result = twiss.compute_equilibrium_emittances_from_sr_and_ibs(
 factor = 1 + emittance_coupling_factor * (
     twiss.partition_numbers[1] / twiss.partition_numbers[0]
     )
-    
+
 print()
 print("Emittance constraint: coupling")
 print("Horizontal steady-state emittance:")
@@ -71,26 +69,26 @@ print(f"ODE: {result.eq_sr_ibs_gemitt_zeta}")
 ########
 
 fig, (ax0, ax1) = plt.subplots(2, 1, sharex=True, layout='constrained')
-    
-ax0.plot(result.time*1e3, 
-           result.gemitt_x*1e12, 
+
+ax0.plot(result.time*1e3,
+           result.gemitt_x*1e12,
            label=r'$\tilde{\varepsilon}_x$')
-ax0.plot(result.time*1e3, 
-           result.gemitt_y*1e12, 
+ax0.plot(result.time*1e3,
+           result.gemitt_y*1e12,
            label=r'$\tilde{\varepsilon}_y$', ls='--')
 ax0b = ax0.twinx()
-ax0b.plot(result.time*1e3, 
-           result.gemitt_zeta*1e6, 
+ax0b.plot(result.time*1e3,
+           result.gemitt_zeta*1e6,
            color='C2',
            label=r'$\varepsilon_z$')
-ax1.plot(result.time*1e3, 
-           result.Kx, 
+ax1.plot(result.time*1e3,
+           result.Kx,
            label=r'$\alpha_x^{IBS}$')
-ax1.plot(result.time*1e3, 
-           result.Ky, 
+ax1.plot(result.time*1e3,
+           result.Ky,
            label=r'$\alpha_y^{IBS}$')
-ax1.plot(result.time*1e3, 
-           result.Kz, 
+ax1.plot(result.time*1e3,
+           result.Kz,
            color='C2',
            label=r'$\alpha_z^{IBS}$')
 
@@ -100,14 +98,14 @@ ax0.legend(lines + lines2, labels + labels2, ncol=3)
 ax1.legend(ncol=3)
 ax1.set_xlabel('Time [ms]')
 ax0.set_ylabel(r'$\tilde{\varepsilon}$ [pm.rad]')
-ax0b.set_ylabel(r'$\varepsilon_z$ [m]')
+ax0b.set_ylabel(r'$\varepsilon_z$ [$\mu$m]')
 ax1.set_ylabel(r'$\alpha^{IBS}$ [s$^{-1}$]')
 
 ##########################################################
 # Steady-state emittance calculations, explicit behavior #
 ##########################################################
 
-bunch_intensity = 1e-9 / e  # 1C bunch charge
+bunch_intensity = 6.2e9 # 1C bunch charge
 emittance_coupling_factor = 0.5
 
 gemitt_x=1.1*twiss.eq_gemitt_x # larger horizontal emittance
@@ -130,7 +128,7 @@ result = twiss.compute_equilibrium_emittances_from_sr_and_ibs(
 ######################################
 # Comparison with analytical results #
 ######################################
-    
+
 print()
 print("Emittance constraint: excitation")
 print("Horizontal steady-state emittance:")
@@ -151,26 +149,26 @@ print(f"ODE: {result.eq_sr_ibs_gemitt_zeta}")
 ########
 
 fig, (ax0, ax1) = plt.subplots(2, 1, sharex=True, layout='constrained')
-    
-ax0.plot(result.time*1e3, 
-           result.gemitt_x*1e12, 
+
+ax0.plot(result.time*1e3,
+           result.gemitt_x*1e12,
            label=r'$\varepsilon_x$')
-ax0.plot(result.time*1e3, 
-           result.gemitt_y*1e12, 
+ax0.plot(result.time*1e3,
+           result.gemitt_y*1e12,
            label=r'$\varepsilon_y$', ls='--')
 ax0b = ax0.twinx()
-ax0b.plot(result.time*1e3, 
-           result.gemitt_zeta*1e6, 
+ax0b.plot(result.time*1e3,
+           result.gemitt_zeta*1e6,
            color='C2',
            label=r'$\varepsilon_z$')
-ax1.plot(result.time*1e3, 
-           result.Kx, 
+ax1.plot(result.time*1e3,
+           result.Kx,
            label=r'$\alpha_x^{IBS}$')
-ax1.plot(result.time*1e3, 
-           result.Ky, 
+ax1.plot(result.time*1e3,
+           result.Ky,
            label=r'$\alpha_y^{IBS}$')
-ax1.plot(result.time*1e3, 
-           result.Kz, 
+ax1.plot(result.time*1e3,
+           result.Kz,
            color='C2',
            label=r'$\alpha_z^{IBS}$')
 
@@ -180,5 +178,5 @@ ax0.legend(lines + lines2, labels + labels2, ncol=3)
 ax1.legend(ncol=3)
 ax1.set_xlabel('Time [ms]')
 ax0.set_ylabel(r'$\varepsilon$ [pm.rad]')
-ax0b.set_ylabel(r'$\varepsilon_z$ [m]')
+ax0b.set_ylabel(r'$\varepsilon_z$ [$\mu$m]')
 ax1.set_ylabel(r'$\alpha^{IBS}$ [s$^{-1}$]')
