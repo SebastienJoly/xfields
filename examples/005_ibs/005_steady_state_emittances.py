@@ -154,10 +154,10 @@ fig, (ax0, ax1) = plt.subplots(2, 1, sharex=True, layout='constrained')
     
 ax0.plot(result.time*1e3, 
            result.gemitt_x*1e12, 
-           label=r'$\tilde{\varepsilon}_x$')
+           label=r'$\varepsilon_x$')
 ax0.plot(result.time*1e3, 
            result.gemitt_y*1e12, 
-           label=r'$\tilde{\varepsilon}_y$', ls='--')
+           label=r'$\varepsilon_y$', ls='--')
 ax0b = ax0.twinx()
 ax0b.plot(result.time*1e3, 
            result.gemitt_zeta*1e6, 
@@ -179,6 +179,6 @@ lines2, labels2 = ax0b.get_legend_handles_labels()
 ax0.legend(lines + lines2, labels + labels2, ncol=3)
 ax1.legend(ncol=3)
 ax1.set_xlabel('Time [ms]')
-ax0.set_ylabel(r'$\tilde{\varepsilon}$ [pm.rad]')
+ax0.set_ylabel(r'$\varepsilon$ [pm.rad]')
 ax0b.set_ylabel(r'$\varepsilon_z$ [m]')
 ax1.set_ylabel(r'$\alpha^{IBS}$ [s$^{-1}$]')
