@@ -19,7 +19,7 @@ def bessy3_line_with_radiation() -> xt.Line:
     # -------------------------------------------
     # Load the line with a particle_ref
     bess3_dir = XTRACK_TEST_DATA / "bessy3"
-    linefile = bess3_dir / "line.json"
+    linefile = bess3_dir / "bessy3.json"
     line = xt.Line.from_json(linefile)
     # -------------------------------------------
     # Build tracker and configure radiation
