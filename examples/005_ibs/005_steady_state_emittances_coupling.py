@@ -63,7 +63,7 @@ analytical_z = result.gemitt_zeta[0] / (1 - result.Kz[-1] / (tw.damping_constant
 
 print("Emittance Constraint: Coupling")
 print("Horizontal steady-state emittance:")
-print("-------------------------------")
+print("---------------------------------")
 print(f"Analytical: {analytical_x}")
 print(f"ODE:        {result.eq_sr_ibs_gemitt_x}")
 print("Vertical steady-state emittance:")
@@ -71,7 +71,7 @@ print("-------------------------------")
 print(f"Analytical: {analytical_y}")
 print(f"ODE:        {result.eq_sr_ibs_gemitt_y}")
 print("Longitudinal steady-state emittance:")
-print("-------------------------------")
+print("-----------------------------------")
 print(f"Analytical: {analytical_z}")
 print(f"ODE:        {result.eq_sr_ibs_gemitt_zeta}")
 
