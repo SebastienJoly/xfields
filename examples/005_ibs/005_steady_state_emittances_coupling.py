@@ -76,12 +76,10 @@ print(f"ODE:        {result.eq_sr_ibs_gemitt_zeta}")
 
 # TODO: add print here with the outputs
 
-########
-# Plot #
-########
+# The results from the table can easily be plotted to view
+# at the evolution of various parameters across time steps
 
-# TODO: make sure plot code is not in the example
-# TODO: add an hline with the analytical result
+#!end-doc-part
 
 fig, (ax0, ax1) = plt.subplots(2, 1, sharex=True, layout="constrained")
 
