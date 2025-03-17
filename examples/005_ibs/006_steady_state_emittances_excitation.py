@@ -84,28 +84,29 @@ print(f"ODE:        {result.eq_sr_ibs_gemitt_zeta}")
 
 # TODO: add print here with the outputs
 
-########
-# Plot #
-########
+# The results from the table can easily be plotted to view
+# at the evolution of various parameters across time steps
 
-# TODO: make sure plot code is not in the example
-# TODO: add an hline with the analytical result
+#!end-doc-part
+# fmt: off
 
 fig, (ax0, ax1) = plt.subplots(2, 1, sharex=True, layout="constrained")
 
-ax0.plot(result.time * 1e3, result.gemitt_x * 1e12, label=r"$\varepsilon_x$")
-ax0.plot(result.time * 1e3, result.gemitt_y * 1e12, label=r"$\varepsilon_y$", ls="--")
+(l1,) = ax0.plot(result.time * 1e3, result.gemitt_x * 1e12, ls="-", label=r"$\tilde{\varepsilon}_x$")
+(l2,) = ax0.plot(result.time * 1e3, result.gemitt_y * 1e12, ls="--", label=r"$\tilde{\varepsilon}_y$")
+(l4,) = ax0.axhline(analytical_x * 1e12, color="C0", ls="-.", label=r"Analytical $\varepsilon_{x}^{eq}$")
+(l5,) = ax0.axhline(analytical_y * 1e12, color="C1", ls="-.", label=r"Analytical $\varepsilon_{y}^{eq}$")
 ax0b = ax0.twinx()
-ax0b.plot(result.time * 1e3, result.gemitt_zeta * 1e6, color="C2", label=r"$\varepsilon_z$")
+(l3,) = ax0b.plot(result.time * 1e3, result.gemitt_zeta * 1e6, color="C2", label=r"$\varepsilon_z$")
+(l6,) = ax0b.axhline(analytical_z * 1e6, color="C2", ls="-.", label=r"Analytical $\varepsilon_{\zeta}^{eq}$")
+ax0.legend(handles=[l1, l2, l3, l4, l5], ncols=2)
+
 ax1.plot(result.time * 1e3, result.Kx, label=r"$\alpha_x^{IBS}$")
 ax1.plot(result.time * 1e3, result.Ky, label=r"$\alpha_y^{IBS}$")
-ax1.plot(result.time * 1e3, result.Kz, color="C2", label=r"$\alpha_z^{IBS}$")
+ax1.plot(result.time * 1e3, result.Kz, label=r"$\alpha_z^{IBS}$")
+ax1.legend()
 
-lines, labels = ax0.get_legend_handles_labels()
-lines2, labels2 = ax0b.get_legend_handles_labels()
-ax0.legend(lines + lines2, labels + labels2, ncol=3)
-ax1.legend(ncol=3)
 ax1.set_xlabel("Time [ms]")
-ax0.set_ylabel(r"$\varepsilon$ [pm.rad]")
-ax0b.set_ylabel(r"$\varepsilon_z$ [m]")
+ax0.set_ylabel(r"$\varepsilon_{x,y}$ [pm.rad]")
+ax0b.set_ylabel(r"$\varepsilon_{\zeta}$ [m]")
 ax1.set_ylabel(r"$\alpha^{IBS}$ [s$^{-1}$]")

@@ -81,6 +81,7 @@ print(f"ODE:        {result.eq_sr_ibs_gemitt_zeta}")
 # at the evolution of various parameters across time steps
 
 #!end-doc-part
+# fmt: off
 
 fig, (ax0, ax1) = plt.subplots(2, 1, sharex=True, layout="constrained")
 
@@ -90,15 +91,15 @@ fig, (ax0, ax1) = plt.subplots(2, 1, sharex=True, layout="constrained")
 (l5,) = ax0.axhline(analytical_y * 1e12, color="C1", ls="-.", label=r"Analytical $\varepsilon_{y}^{eq}$")
 ax0b = ax0.twinx()
 (l3,) = ax0b.plot(result.time * 1e3, result.gemitt_zeta * 1e6, color="C2", label=r"$\varepsilon_z$")
-(l6,) = ax0b.axhline(analytical_z * 1e12, color="C2", ls="-.", label=r"Analytical $\varepsilon_{\zeta}^{eq}$")
+(l6,) = ax0b.axhline(analytical_z * 1e6, color="C2", ls="-.", label=r"Analytical $\varepsilon_{\zeta}^{eq}$")
 ax0.legend(handles=[l1, l2, l3, l4, l5], ncols=2)
 
 ax1.plot(result.time * 1e3, result.Kx, label=r"$\alpha_{x}^{IBS}$")
 ax1.plot(result.time * 1e3, result.Ky, label=r"$\alpha_{y}^{IBS}$")
-ax1.plot(result.time * 1e3, result.Kz, color="C2", label=r"$\alpha_{z^{IBS}$")
+ax1.plot(result.time * 1e3, result.Kz, label=r"$\alpha_{z^{IBS}$")
 ax1.legend()
 
 ax1.set_xlabel("Time [ms]")
-ax0.set_ylabel(r"$\tilde{\varepsilon}$ [pm.rad]")
-ax0b.set_ylabel(r"$\varepsilon_z$ [m]")
+ax0.set_ylabel(r"$\tilde{\varepsilon_{x,y}}$ [pm.rad]")
+ax0b.set_ylabel(r"$\varepsilon_{\zeta}$ [m]")
 ax1.set_ylabel(r"$\alpha^{IBS}$ [s$^{-1}$]")
