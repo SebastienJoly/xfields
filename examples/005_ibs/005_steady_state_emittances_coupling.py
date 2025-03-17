@@ -90,7 +90,7 @@ fig, (ax0, ax1) = plt.subplots(2, 1, sharex=True, layout="constrained")
 (l5,) = ax0.axhline(analytical_y * 1e12, color="C1", ls="-.", label=r"Analytical $\varepsilon_{y}^{eq}$")
 ax0b = ax0.twinx()
 (l3,) = ax0b.plot(result.time * 1e3, result.gemitt_zeta * 1e6, color="C2", label=r"$\varepsilon_z$")
-(l4,) = ax0b.axhline(analytical_z * 1e12, color="C2", ls="-.", label=r"Analytical $\varepsilon_{\zeta}^{eq}$")
+(l6,) = ax0b.axhline(analytical_z * 1e12, color="C2", ls="-.", label=r"Analytical $\varepsilon_{\zeta}^{eq}$")
 ax0.legend(handles=[l1, l2, l3, l4, l5], ncols=2)
 
 ax1.plot(result.time * 1e3, result.Kx, label=r"$\alpha_{x}^{IBS}$")
