@@ -33,14 +33,22 @@ tw = line.twiss(eneloss_and_damping=True)
 bunch_intensity = 1e-9 / e  # 1C bunch charge
 emittance_coupling_factor = 1  # round beam
 
+# If not providing starting emittances, the function will
+# default to the SR equilibrium emittances from the TwissTable
+
 result = tw.compute_equilibrium_emittances_from_sr_and_ibs(
     formalism="Nagaitsev",  # can also be "B&M"
     total_beam_intensity=bunch_intensity,
+    # gemitt_x=...,  # defaults to tw.eq_gemitt_x
+    # gemitt_y=...,  # defaults to tw.eq_gemitt_x
+    # gemitt_zeta=...,  # defaults to tw.eq_gemitt_zeta
     emittance_coupling_factor=emittance_coupling_factor,
-    emittance_constraint="coupling",  # can also be None or "excitation"
+    emittance_constraint="coupling",
 )
 
-# TODO: add a print of the table and comment with top rows so users know what's there
+# The returned object is a Table
+print(result)
+# TODO: output of the print
 
 ######################################
 # Comparison with analytical results #
