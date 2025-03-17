@@ -31,26 +31,33 @@ tw = line.twiss(eneloss_and_damping=True)
 ######################################
 
 bunch_intensity = 1e-9 / e  # 1C bunch charge
-emittance_coupling_factor = 0.5
+emittance_coupling_factor = 0.5  # for excitation this time
+
+# One can provide specific values for starting emittances,
+# as well as sigma_zeta / sigma_delta. A specific time step
+# or relative tolerance for convergence can also be provided.
 
 gemitt_x = 1.1 * tw.eq_gemitt_x  # larger horizontal emittance
 gemitt_y = 0.5 * tw.eq_gemitt_y  # smaller vertical emittance
+
+# larger sigma_zeta and sigma_delta from potential well distortion for example
 overwrite_sigma_zeta = 1.2 * (tw.eq_gemitt_zeta * tw.bets0) ** 0.5  # larger sigma_zeta
 overwrite_sigma_delta = 1.2 * (tw.eq_gemitt_zeta / tw.bets0) ** 0.5  # larger sigma_delta
-# larger sigma_zeta and sigma_delta from potential well distortion for example
 
 result = tw.compute_equilibrium_emittances_from_sr_and_ibs(
     formalism="Nagaitsev",  # can also be "B&M"
     total_beam_intensity=bunch_intensity,
-    gemitt_x=gemitt_x,
-    gemitt_y=gemitt_y,
-    overwrite_sigma_zeta=overwrite_sigma_zeta,
-    overwrite_sigma_delta=overwrite_sigma_delta,
+    gemitt_x=gemitt_x,  # provided explicitely
+    gemitt_y=gemitt_y,  # provided explicitely
+    overwrite_sigma_zeta=overwrite_sigma_zeta,  # will recompute gemitt_zeta
+    overwrite_sigma_delta=overwrite_sigma_delta,  # will recompute gemitt_zeta
     emittance_coupling_factor=emittance_coupling_factor,
-    emittance_constraint="excitation",  # can also be None or "coupling"
+    emittance_constraint="excitation",
 )
 
-# TODO: add a print of the table and comment with top rows so users know what's there
+# The returned object is a Table
+print(result)
+# TODO: output of the print
 
 ######################################
 # Comparison with analytical results #
