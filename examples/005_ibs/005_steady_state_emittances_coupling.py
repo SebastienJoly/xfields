@@ -54,22 +54,25 @@ print(result)
 # Comparison with analytical results #
 ######################################
 
+# These are analytical estimate (from the last step's IBS growth rates)
 factor = 1 + emittance_coupling_factor * (tw.partition_numbers[1] / tw.partition_numbers[0])
+analytical_x = result.gemitt_x[0] / (1 - result.Kx[-1] / (tw.damping_constants_s[0] * factor))
+analytical_y = result.gemitt_y[0] / (1 - result.Kx[-1] / (tw.damping_constants_s[0] * factor))
+analytical_z = result.gemitt_zeta[0] / (1 - result.Kz[-1] / (tw.damping_constants_s[2]))
 
-print()
-print("Emittance constraint: coupling")
+print("Emittance Constraint: Coupling")
 print("Horizontal steady-state emittance:")
 print("-------------------------------")
-print(f"Analytical: {result.gemitt_x[0] / (1 - result.Kx[-1] / (tw.damping_constants_s[0] * factor))}")
-print(f"ODE: {result.eq_sr_ibs_gemitt_x}")
+print(f"Analytical: {analytical_x}")
+print(f"ODE:        {result.eq_sr_ibs_gemitt_x}")
 print("Vertical steady-state emittance:")
 print("-------------------------------")
-print(f"Analytical: {result.gemitt_y[0] / (1 - result.Kx[-1] / (tw.damping_constants_s[0] * factor))}")
-print(f"ODE: {result.eq_sr_ibs_gemitt_y}")
+print(f"Analytical: {analytical_y}")
+print(f"ODE:        {result.eq_sr_ibs_gemitt_y}")
 print("Longitudinal steady-state emittance:")
 print("-------------------------------")
-print(f"Analytical: {result.gemitt_zeta[0] / (1 - result.Kz[-1] / (tw.damping_constants_s[2]))}")
-print(f"ODE: {result.eq_sr_ibs_gemitt_zeta}")
+print(f"Analytical: {analytical_z}")
+print(f"ODE:        {result.eq_sr_ibs_gemitt_zeta}")
 
 # TODO: add print here with the outputs
 
