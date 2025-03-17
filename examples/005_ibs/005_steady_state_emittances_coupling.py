@@ -55,6 +55,7 @@ print(result)
 ######################################
 
 # These are analytical estimate (from the last step's IBS growth rates)
+# The factor below is to be respected with the coupling constraint
 factor = 1 + emittance_coupling_factor * (tw.partition_numbers[1] / tw.partition_numbers[0])
 analytical_x = result.gemitt_x[0] / (1 - result.Kx[-1] / (tw.damping_constants_s[0] * factor))
 analytical_y = result.gemitt_y[0] / (1 - result.Kx[-1] / (tw.damping_constants_s[0] * factor))
