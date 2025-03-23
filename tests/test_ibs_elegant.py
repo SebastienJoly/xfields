@@ -1,15 +1,44 @@
 import pathlib
 import pytest
-import pandas as pd
 import xobjects as xo
 import xtrack as xt
 from ibs_conftest import XTRACK_TEST_DATA
 
-test_data_folder = pathlib.Path(
-    __file__).parent.joinpath('../test_data').absolute()
+result_elegant = {
+    # Emittance coupling factor
+    "0.02" : {
+        "eps_x": 1.88319e-10,
+        "sigma_z": 0.00491982,
+        "sigma_delta": 0.00140017,
+        "T_x": 106.648,
+        "T_z": 32.8772
+  },
+    # Emittance coupling factor
+    "0.1" : {
+        "eps_x": 1.46119e-10,
+        "sigma_z": 0.00441742,
+        "sigma_delta": 0.00125719,
+        "T_x": 81.5391,
+        "T_z": 25.2408
+  },
+    # Emittance coupling factor
+    "0.5" : {
+        "eps_x": 1.05835e-10,
+        "sigma_z": 0.00404997,
+        "sigma_delta": 0.00115261,
+        "T_x": 63.7394,
+        "T_z": 17.7664
+  },
+    # Emittance coupling factor
+    "1" : {
+        "eps_x": 8.5549e-11,
+        "sigma_z": 0.00395442,
+        "sigma_delta": 0.00112542,
+        "T_x": 63.1134,
+        "T_z": 15.4736
+  }
+} 
 
-fname = test_data_folder / "ibs_evolution.txt"
-df = pd.read_csv(fname, sep='\t')
 
 BUNCH_INTENSITY: float = 6.2e9  # 1C bunch intensity
 
@@ -64,30 +93,27 @@ def test_equilibrium_vs_elegant(
         emittance_constraint="coupling",
     )
     # -------------------------------------------
-    # Load elegant results for this scenario 
-    result_elegant = df.query(f"Coupling == {emittance_coupling_factor}")
-    # -------------------------------------------
     # Check xsuite results vs elegant results
     # Check the horizontal equilibrium emittance and IBS growth rate
     xo.assert_allclose(
-        result.eq_sr_ibs_gemitt_x, result_elegant.eps_x.iloc[-1],
+        result.eq_sr_ibs_gemitt_x, result_elegant[str(emittance_coupling_factor)].eps_x,
         atol=1e-12, rtol=5e-2,
     )
     # Factor of 2 because different conventions between Xsuite and elegant!
     xo.assert_allclose(
-        result.Kx[-1], result_elegant.T_x.iloc[-1] / 2,
+        result.Kx[-1], result_elegant[str(emittance_coupling_factor)].T_x / 2,
         rtol=6e-2,
     )
     # Check the longitudinal equilibrium emittance and IBS growth rate
     # Different eps_zeta convention between both codes
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_zeta, 
-        result_elegant.sigma_delta.iloc[-1] * result_elegant.sigma_z.iloc[-1],
+        result_elegant[str(emittance_coupling_factor)].sigma_delta * result_elegant[str(emittance_coupling_factor)].sigma_z,
         rtol=5e-2,
     )
     # Factor of 2 because different conventions between Xsuite and elegant!
     xo.assert_allclose(
-        result.Kz[-1], result_elegant.T_z.iloc[-1] / 2,
+        result.Kz[-1], result_elegant[str(emittance_coupling_factor)].T_z / 2,
         rtol=6e-2,
     )
 
