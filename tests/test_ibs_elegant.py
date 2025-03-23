@@ -37,7 +37,7 @@ result_elegant = {
         "T_x": 63.1134,
         "T_z": 15.4736
   }
-} 
+}
 
 
 BUNCH_INTENSITY: float = 6.2e9  # 1C bunch intensity
@@ -96,24 +96,24 @@ def test_equilibrium_vs_elegant(
     # Check xsuite results vs elegant results
     # Check the horizontal equilibrium emittance and IBS growth rate
     xo.assert_allclose(
-        result.eq_sr_ibs_gemitt_x, result_elegant[str(emittance_coupling_factor)].eps_x,
+        result.eq_sr_ibs_gemitt_x, result_elegant[str(emittance_coupling_factor)]["eps_x"],
         atol=1e-12, rtol=5e-2,
     )
     # Factor of 2 because different conventions between Xsuite and elegant!
     xo.assert_allclose(
-        result.Kx[-1], result_elegant[str(emittance_coupling_factor)].T_x / 2,
+        result.Kx[-1], result_elegant[str(emittance_coupling_factor)]["T_x"] / 2,
         rtol=6e-2,
     )
     # Check the longitudinal equilibrium emittance and IBS growth rate
     # Different eps_zeta convention between both codes
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_zeta, 
-        result_elegant[str(emittance_coupling_factor)].sigma_delta * result_elegant[str(emittance_coupling_factor)].sigma_z,
+        result_elegant[str(emittance_coupling_factor)]["sigma_delta"] * result_elegant[str(emittance_coupling_factor)]["sigma_z"],
         rtol=5e-2,
     )
     # Factor of 2 because different conventions between Xsuite and elegant!
     xo.assert_allclose(
-        result.Kz[-1], result_elegant[str(emittance_coupling_factor)].T_z / 2,
+        result.Kz[-1], result_elegant[str(emittance_coupling_factor)]["T_z"] / 2,
         rtol=6e-2,
     )
 
