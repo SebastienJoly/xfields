@@ -50,13 +50,13 @@ def test_equilibrium_vs_analytical_constraint_coupling(
     # -------------------------------------------
     # Compute the equilibrium emittances - coupling constraint
     result = tw.compute_equilibrium_emittances_from_sr_and_ibs(
-        formalism="Nagaitsev",  # No Dy in the line, faster
+        formalism="nagaitsev",  # No Dy in the line, faster
         total_beam_intensity=BUNCH_INTENSITY,
         emittance_coupling_factor=emittance_coupling_factor,
         emittance_constraint="coupling",
     )
     # -------------------------------------------
-    # Check results vs analytical estimations
+    # Check results vs analytical estimations (using last step's growth rate)
     factor = 1 + emittance_coupling_factor * (tw.partition_numbers[1] / tw.partition_numbers[0])
     # Check the horizontal equilibrium emittance
     xo.assert_allclose(
@@ -90,13 +90,13 @@ def test_equilibrium_vs_analytical_constraint_excitation(
     # -------------------------------------------
     # Compute the equilibrium emittances - excitation constraint
     result = tw.compute_equilibrium_emittances_from_sr_and_ibs(
-        formalism="Nagaitsev",  # No Dy in the line, faster
+        formalism="nagaitsev",  # No Dy in the line, faster
         total_beam_intensity=BUNCH_INTENSITY,
         emittance_coupling_factor=emittance_coupling_factor,
         emittance_constraint="excitation",
     )
     # -------------------------------------------
-    # Check results vs analytical estimations
+    # Check results vs analytical estimations (using last step's growth rate)
     # Check the horizontal equilibrium emittance
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_x,
@@ -135,7 +135,7 @@ def test_equilibrium_vs_analytical_no_constraint(
     # No constraint so no renormalization of transverse emittances
     # and SR eq in vertical is 0 so we change it to avoid exact 0
     result = tw.compute_equilibrium_emittances_from_sr_and_ibs(
-        formalism="Nagaitsev",  # No Dy in the line, faster
+        formalism="nagaitsev",  # No Dy in the line, faster
         total_beam_intensity=BUNCH_INTENSITY,
         gemitt_x=tw.eq_gemitt_x,
         gemitt_y=tw.eq_gemitt_x * initial_factor,
@@ -143,7 +143,7 @@ def test_equilibrium_vs_analytical_no_constraint(
         emittance_constraint=None,
     )
     # -------------------------------------------
-    # Check results vs analytical estimations
+    # Check results vs analytical estimations (using last step's growth rate)
     # Check the horizontal equilibrium emittance
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_x,
@@ -226,7 +226,7 @@ def test_equilibrium_vs_elegant(emittance_coupling_factor, bessy3_line_with_radi
     # -------------------------------------------
     # Compute the equilibrium emittances - coupling constraint
     result = tw.compute_equilibrium_emittances_from_sr_and_ibs(
-        formalism="Nagaitsev",  # No Dy in the line, faster
+        formalism="nagaitsev",  # No Dy in the line, faster
         total_beam_intensity=BUNCH_INTENSITY,
         emittance_coupling_factor=emittance_coupling_factor,
         emittance_constraint="coupling",
