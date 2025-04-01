@@ -37,6 +37,8 @@ emittance_coupling_factor = 0.5  # for excitation this time
 # as well as sigma_zeta / sigma_delta. A specific time step
 # or relative tolerance for convergence can also be provided.
 
+# TODO: problem is from providing these. The overwrite... are ok,
+# different coupling factors are ok. This is not.
 gemitt_x = 1.1 * tw.eq_gemitt_x  # larger horizontal emittance
 gemitt_y = 0.5 * tw.eq_gemitt_y  # smaller vertical emittance
 
