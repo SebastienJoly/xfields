@@ -45,7 +45,7 @@ overwrite_sigma_zeta = 1.2 * (tw.eq_gemitt_zeta * tw.bets0) ** 0.5  # larger sig
 overwrite_sigma_delta = 1.2 * (tw.eq_gemitt_zeta / tw.bets0) ** 0.5  # larger sigma_delta
 
 result = tw.compute_equilibrium_emittances_from_sr_and_ibs(
-    formalism="Nagaitsev",  # can also be "B&M"
+    formalism="nagaitsev",  # can also be "bjorken-mtingwa"
     total_beam_intensity=bunch_intensity,
     gemitt_x=gemitt_x,  # provided explicitely
     gemitt_y=gemitt_y,  # provided explicitely
@@ -68,6 +68,7 @@ analytical_x = result.gemitt_x[0] / (1 - result.Kx[-1] / (tw.damping_constants_s
 analytical_y = result.gemitt_y[0] / (1 - result.Kx[-1] / (tw.damping_constants_s[0]))
 analytical_z = result.gemitt_zeta[0] / (1 - result.Kz[-1] / (tw.damping_constants_s[2]))
 
+print()
 print("Emittance Constraint: Excitation")
 print("Horizontal steady-state emittance:")
 print("---------------------------------")
@@ -94,19 +95,22 @@ fig, (ax0, ax1) = plt.subplots(2, 1, sharex=True, layout="constrained")
 
 (l1,) = ax0.plot(result.time * 1e3, result.gemitt_x * 1e12, ls="-", label=r"$\tilde{\varepsilon}_x$")
 (l2,) = ax0.plot(result.time * 1e3, result.gemitt_y * 1e12, ls="--", label=r"$\tilde{\varepsilon}_y$")
-(l4,) = ax0.axhline(analytical_x * 1e12, color="C0", ls="-.", label=r"Analytical $\varepsilon_{x}^{eq}$")
-(l5,) = ax0.axhline(analytical_y * 1e12, color="C1", ls="-.", label=r"Analytical $\varepsilon_{y}^{eq}$")
+l4 = ax0.axhline(analytical_x * 1e12, color="C0", ls="-.", label=r"Analytical $\varepsilon_{x}^{eq}$")
+l5 = ax0.axhline(analytical_y * 1e12, color="C1", ls="-.", label=r"Analytical $\varepsilon_{y}^{eq}$")
 ax0b = ax0.twinx()
 (l3,) = ax0b.plot(result.time * 1e3, result.gemitt_zeta * 1e6, color="C2", label=r"$\varepsilon_z$")
-(l6,) = ax0b.axhline(analytical_z * 1e6, color="C2", ls="-.", label=r"Analytical $\varepsilon_{\zeta}^{eq}$")
+l6 = ax0b.axhline(analytical_z * 1e6, color="C2", ls="-.", label=r"Analytical $\varepsilon_{\zeta}^{eq}$")
 ax0.legend(handles=[l1, l2, l3, l4, l5], ncols=2)
 
-ax1.plot(result.time * 1e3, result.Kx, label=r"$\alpha_x^{IBS}$")
-ax1.plot(result.time * 1e3, result.Ky, label=r"$\alpha_y^{IBS}$")
-ax1.plot(result.time * 1e3, result.Kz, label=r"$\alpha_z^{IBS}$")
+ax1.plot(result.time * 1e3, result.Kx, label=r"$\alpha_{x}^{IBS}$")
+ax1.plot(result.time * 1e3, result.Ky, label=r"$\alpha_{y}^{IBS}$")
+ax1.plot(result.time * 1e3, result.Kz, label=r"$\alpha_{z}^{IBS}$")
 ax1.legend()
 
 ax1.set_xlabel("Time [ms]")
-ax0.set_ylabel(r"$\varepsilon_{x,y}$ [pm.rad]")
+ax0.set_ylabel(r"$\tilde{\varepsilon_{x,y}}$ [pm.rad]")
 ax0b.set_ylabel(r"$\varepsilon_{\zeta}$ [m]")
-ax1.set_ylabel(r"$\alpha^{IBS}$ [s$^{-1}$]")
+ax1.set_ylabel(r"$\alpha^{IBS}$ [$s^{-1}$]")
+fig.align_ylabels((ax0, ax1))
+plt.tight_layout()
+plt.show()
