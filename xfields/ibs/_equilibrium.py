@@ -138,15 +138,15 @@ def _ibs_rates_and_emittance_derivatives(
     LOGGER.debug("Computing emittance time derivatives analytically.")
     depsilon_x_dt = (
         -2 * twiss.damping_constants_s[0] * (gemitt_x - twiss.eq_gemitt_x)
-        + 2 * ibs_growth_rates.Ax * gemitt_x
+        + 2 * ibs_growth_rates.Kx * gemitt_x
     )
     depsilon_y_dt = (
         -2 * twiss.damping_constants_s[1] * (gemitt_y - twiss.eq_gemitt_y)
-        + 2 * ibs_growth_rates.Ay * gemitt_y
+        + 2 * ibs_growth_rates.Ky * gemitt_y
     )
     depsilon_z_dt = (
         -2 * twiss.damping_constants_s[2] * (gemitt_zeta - twiss.eq_gemitt_zeta)
-        + 2 * ibs_growth_rates.Az * gemitt_zeta
+        + 2 * ibs_growth_rates.Kz * gemitt_zeta
     )
     # ---------------------------------------------------------------------------------------------
     # And return the results
@@ -308,9 +308,9 @@ def compute_equilibrium_emittances_from_sr_and_ibs(
             - gemitt_zeta: longitudinal geometric emittance values, in [m].
             - sigma_zeta: bunch length values, in [m].
             - sigma_delta: momentum spread values, in [-].
-            - Tx: horizontal IBS growth rate, in [s^-1].
-            - Ty: vertical IBS growth rate, in [s^-1].
-            - Tz: longitudinal IBS growth rate, in [s^-1].
+            - Kx: horizontal IBS amplitude growth rate, in [s^-1].
+            - Ky: vertical IBS amplitude growth rate, in [s^-1].
+            - Kz: longitudinal IBS amplitude growth rate, in [s^-1].
         The table also contains the following global quantities:
             - damping_constants_s: radiation damping constants used, in [s^-1].
             - partition_numbers: damping partition numbers used.
@@ -424,9 +424,9 @@ def compute_equilibrium_emittances_from_sr_and_ibs(
     time_step: float = twiss.T_rev0
     # Structures for iterative results (time, IBS growth rates, computed emittances)
     time_deltas: list[float] = []  # stores the deltas (!), we do a cumsum at the end
-    A_x: list[float] = []
-    A_y: list[float] = []
-    A_z: list[float] = []
+    K_x: list[float] = []
+    K_y: list[float] = []
+    K_z: list[float] = []
     res_gemitt_x: list[float] = []
     res_gemitt_y: list[float] = []
     res_gemitt_zeta: list[float] = []
@@ -478,9 +478,9 @@ def compute_equilibrium_emittances_from_sr_and_ibs(
         # --------------------------------------------------------------------------
         # Store the current values for this time step
         time_deltas.append(time_step)
-        A_x.append(ibs_growth_rates[0])
-        A_y.append(ibs_growth_rates[1])
-        A_z.append(ibs_growth_rates[2])
+        K_x.append(ibs_growth_rates[0])
+        K_y.append(ibs_growth_rates[1])
+        K_z.append(ibs_growth_rates[2])
         res_gemitt_x.append(current_emittances[0])
         res_gemitt_y.append(current_emittances[1])
         res_gemitt_zeta.append(current_emittances[2])
@@ -508,9 +508,9 @@ def compute_equilibrium_emittances_from_sr_and_ibs(
             "gemitt_zeta": np.array(res_gemitt_zeta),
             "sigma_zeta": np.sqrt(np.array(res_gemitt_zeta) * longitudinal_emittance_ratio),
             "sigma_delta": np.sqrt(np.array(res_gemitt_zeta) / longitudinal_emittance_ratio),
-            "Ax": np.array(A_x),
-            "Ay": np.array(A_y),
-            "Az": np.array(A_z),
+            "Kx": np.array(K_x),
+            "Ky": np.array(K_y),
+            "Kz": np.array(K_z),
         },
         index="time",
     )
