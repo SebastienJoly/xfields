@@ -37,7 +37,7 @@ emittance_coupling_factor = 1  # round beam
 # default to the SR equilibrium emittances from the TwissTable
 
 result = tw.compute_equilibrium_emittances_from_sr_and_ibs(
-    formalism="Nagaitsev",  # can also be "bjorken-mtingwa"
+    formalism="nagaitsev",  # can also be "bjorken-mtingwa"
     total_beam_intensity=bunch_intensity,
     # gemitt_x=...,  # defaults to tw.eq_gemitt_x
     # gemitt_y=...,  # defaults to tw.eq_gemitt_x
