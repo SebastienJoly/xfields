@@ -97,6 +97,7 @@ def test_equilibrium_vs_analytical_constraint_excitation(
     )
     # -------------------------------------------
     # Check results vs analytical estimations (using last step's growth rate)
+    # NOTE: formula valid only if starting emittances are the SR equilibrium
     # Check the horizontal equilibrium emittance
     xo.assert_allclose(
         result.eq_sr_ibs_gemitt_x,
