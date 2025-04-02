@@ -70,8 +70,8 @@ print(result)
 # 0.09075503381990582                1.22535e-10   6.12676e-11   4.70395e-06    0.00445343    0.00105625       21.8777   -0.00648843       9.10743
 
 
-# The results from the table can easily be plotted to view
-# at the evolution of various parameters across time steps
+# The results from the table can easily be plotted . One notices
+# the transverse coupling factor is respected at all steps.
 
 #!end-doc-part
 # fmt: off
