@@ -122,7 +122,7 @@ ax1.plot(result.time * 1e3, result.Kz, label=r"$\alpha_{z}^{IBS}$")
 ax1.legend()
 
 ax1.set_xlabel("Time [ms]")
-ax0.set_ylabel(r"$\tilde{\varepsilon_{x,y}}$ [pm.rad]")
+ax0.set_ylabel(r"$\tilde{\varepsilon}_{x,y}$ [pm.rad]")
 ax0b.set_ylabel(r"$\varepsilon_{\zeta}$ [m]")
 ax1.set_ylabel(r"$\alpha^{IBS}$ [$s^{-1}$]")
 fig.align_ylabels((ax0, ax1))
