@@ -34,18 +34,17 @@ bunch_intensity = 1e-9 / e  # 1C bunch charge
 emittance_coupling_factor = 0.5  # for excitation this time
 
 # One can provide specific values for starting emittances,
-# as well as sigma_zeta / sigma_delta. A specific time step
-# or relative tolerance for convergence can also be provided.
-
-# TODO: problem is from providing these. The overwrite... are ok,
-# different coupling factors are ok. This is not.
+# but we need to ensure they respect the emittance coupling
+# contraint we want to enforce
 gemitt_x = 1.1 * tw.eq_gemitt_x  # larger horizontal emittance
-gemitt_y = 0.5 * tw.eq_gemitt_y  # smaller vertical emittance
+gemitt_y = emittance_coupling_factor * gemitt_x  # enforce the constraint
 
-# larger sigma_zeta and sigma_delta from potential well distortion for example
+# One can overwrite sigma_zeta / sigma_delta (larger
+# values from potential well distortion for example)
 overwrite_sigma_zeta = 1.2 * (tw.eq_gemitt_zeta * tw.bets0) ** 0.5  # larger sigma_zeta
 overwrite_sigma_delta = 1.2 * (tw.eq_gemitt_zeta / tw.bets0) ** 0.5  # larger sigma_delta
 
+# A specific time step or relative tolerance for convergence can also be provided.
 result = tw.compute_equilibrium_emittances_from_sr_and_ibs(
     formalism="nagaitsev",  # can also be "bjorken-mtingwa"
     total_beam_intensity=bunch_intensity,
